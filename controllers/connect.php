@@ -47,6 +47,8 @@ class Connect extends Base
 		$_SESSION['sociallogin_current']['mid'] = $_SESSION['sociallogin_auth']['mid'];
 		$redirect_url = $_SESSION['sociallogin_auth']['redirect'];
 		$redirect_url = $redirect_url ? Context::getRequestUri() . '?' . $redirect_url : Context::getRequestUri();
+
+		$request_method = Context::getRequestMethod();
 		
 		// 인증
 		$output = $oDriver->authenticate();
@@ -134,15 +136,25 @@ class Connect extends Base
 			$this->setMessage($msg);
 		}
 
-		if ($type == 'register')
+		if($request_method != 'XMLRPC' && $request_method != 'JSON')
 		{
-			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', $_SESSION['sociallogin_current']['mid'], 'act', 'dispSocialloginSnsManage'));
+			if ($type == 'register')
+			{
+				$this->setRedirectUrl(getNotEncodedUrl('', 'mid', $_SESSION['sociallogin_current']['mid'], 'act', 'dispSocialloginSnsManage'));
+			}
+			else
+			{
+				if (!$this->getRedirectUrl())
+				{
+					$this->setRedirectUrl($redirect_url);
+				}
+			}
 		}
 		else
 		{
-			if (!$this->getRedirectUrl())
+			if ($redirect_url)
 			{
-				$this->setRedirectUrl($redirect_url);
+				$this->add('redirect_url', $redirect_url);
 			}
 		}
 
