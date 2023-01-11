@@ -13,6 +13,7 @@ class Base extends \ModuleObject
 		'twitter',
 		'facebook',
 		'google',
+		'googleone',
 		'naver',
 		'kakao',
 		'discord',

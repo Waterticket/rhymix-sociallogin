@@ -145,6 +145,8 @@ class Connect extends Base
 				$this->setRedirectUrl($redirect_url);
 			}
 		}
+
+		return new BaseObject();
 	}
 
 	/**
