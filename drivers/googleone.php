@@ -144,7 +144,7 @@ class Googleone extends Base
 
 	public function getProfileImage()
 	{
-		return $this->profile['profile_image'] ?? '';
+		return \Rhymix\Modules\Sociallogin\Base::getDriverAuthData('googleone')->profile['profile_image'];
 	}
 	
 	/**
